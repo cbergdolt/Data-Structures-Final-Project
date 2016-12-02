@@ -19,10 +19,7 @@ def pull_jsondata(ex_request_call):
     return data
 
 if __name__ == '__main__':
-    # ex_request_call = "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy"+ACCESS_TOKEN     # Typically you need your access token for 
-a request (the numbers we have on the google doc; also at the top of this document)
-    ex_request_call = "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy"                    # Example from online. This is a request 
-for albums that meet the given ID
+    # ex_request_call = "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy"+ACCESS_TOKEN     # Typically you need your access token for a request (the numbers we have on the google doc; also at the top of this document)
+    ex_request_call = "https://api.spotify.com/v1/albums/4aawyAB9vmqN3uQ7FjRGTy"                    # Example from online. This is a request for album info of the given ID
     results = pull_jsondata(ex_request_call)
     print results
-
