@@ -7,7 +7,6 @@ import re
 
 # ACCESS_TOKEN = "86c24923538142578c5a85be2fc627f1"
 # Client ID: 86c24923538142578c5a85be2fc627f1
-# Client Secret: 31febb7d90454421958dc97991982e49
 
 def get_request(url, params=None):
     result = urllib2.urlopen(url)
@@ -16,6 +15,7 @@ def get_request(url, params=None):
 
 def pull_jsondata(ex_request_call):
     data = get_request(ex_request_call)
+    print data
     return data
 
 if __name__ == '__main__':
