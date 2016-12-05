@@ -1,21 +1,25 @@
+#python script to generate two txt files of playlists
+# (one for each user)
 import sys
 import spotipy
 import spotipy.util as util
 
-def show_tracks(tracks):
+def save_tracks(tracks, userfile):
     for i, item in enumerate(tracks['items']):
         track = item['track']
-        print "   %d %32.32s %s" % (i, track['artists'][0]['name'],
-            track['name'])
+        userfile.write(track['artists'][0]['name']) # track artist
+	userfile.write(":") # artist/track separator
+	userfile.write(track['name'].encode('utf8')) # track name
+	userfile.write("\n") # newline
 
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         username = sys.argv[1]
         username2 = sys.argv[2]
     else:
-        print "Whoops, need your username!"
-        print "usage: python user_playlists.py [username]"
+        print "Please supply two usernames"
+        print "usage: python playlistContents.py [username1] [username2]"
         sys.exit()
 
 
@@ -24,36 +28,31 @@ if __name__ == '__main__':
     if token:
         sp = spotipy.Spotify(auth=token)
         playlists = sp.user_playlists(username)
+	user1 = open("user1.txt", 'w') # open file for write only
         for playlist in playlists['items']:
             if playlist['owner']['id'] == username:
-                print
-                print playlist['name']
-                print '  total tracks', playlist['tracks']['total']
                 results = sp.user_playlist(username, playlist['id'],
                     fields="tracks,next")
                 tracks = results['tracks']
-                show_tracks(tracks)
+                save_tracks(tracks, user1)
                 while tracks['next']:
                     tracks = sp.next(tracks)
-                    show_tracks(tracks)
+                    save_tracks(tracks, user1)
+	user1.close() # close file
     else:
         print "Can't get token for", username
 
 
-
     playlists2 = sp.user_playlists(username2)
+    user2 = open("user2.txt", 'w') # open file for write only
     for playlist2 in playlists2['items']:
         if playlist2['owner']['id'] == username2:
-            print
-            print playlist2['name']
-            print '  total tracks', playlist2['tracks']['total']
             results2 = sp.user_playlist(username2, playlist2['id'],
                 fields="tracks,next")
             tracks2 = results2['tracks']
-            show_tracks(tracks2)
+            save_tracks(tracks2, user2)
             while tracks2['next']:
                 tracks2 = sp.next(tracks2)
-                show_tracks(tracks2)
-
-
+                save_tracks(tracks2, user2)
+    user2.close() #close file
 
