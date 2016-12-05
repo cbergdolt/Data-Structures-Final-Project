@@ -43,16 +43,21 @@ if __name__ == '__main__':
         print "Can't get token for", username
 
 
-    playlists2 = sp.user_playlists(username2)
-    user2 = open("user2.txt", 'w') # open file for write only
-    for playlist2 in playlists2['items']:
-        if playlist2['owner']['id'] == username2:
-            results2 = sp.user_playlist(username2, playlist2['id'],
-                fields="tracks,next")
-            tracks2 = results2['tracks']
-            save_tracks(tracks2, user2)
-            while tracks2['next']:
-                tracks2 = sp.next(tracks2)
-                save_tracks(tracks2, user2)
-    user2.close() #close file
+    token2 = util.prompt_for_user_token(username2)
+
+    if token2:
+        sp2 = spotipy.Spotify(auth=token2)
+	playlists2 = sp2.user_playlists(username2)
+	user2 = open("user2.txt", 'w') # open file for write only
+	for playlist2 in playlists2['items']:
+            if playlist2['owner']['id'] == username2:
+        	results2 = sp2.user_playlist(username2, playlist2['id'], fields="tracks,next")
+	        tracks2 = results2['tracks']
+           	save_tracks(tracks2, user2)
+            	while tracks2['next']:
+            	    tracks2 = sp2.next(tracks2)
+            	    save_tracks(tracks2, user2)
+    	user2.close() #close file
+    else:
+	print "Can't get token for", username2
 
