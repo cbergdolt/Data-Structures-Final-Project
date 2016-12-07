@@ -21,6 +21,7 @@
 #include <set>
 #include <map>
 #include <string>
+#include <algorithm>
 using namespace std;
 
 // Include client ID, secret, redirect as constants to use when we call the python script?
@@ -79,11 +80,16 @@ void User::store_data(string filename) {
 
 // Return a set of songs that are in both users' playlists
 set<string> User::compare_songs(set<string> s) {
-                                       
+  set<string> commonSongs;
+  set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
+  for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
+    cout << *it << endl;
+  }
+  return commonSongs;
 }
 
-map<string, int> User::compare_artists(map<string, int> a) {
+//map<string, int> User::compare_artists(map<string, int> a) {
 
-}
+//}
 
 
