@@ -106,6 +106,7 @@ void User::store_data(string filename) {
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   set<pair<string, string>> commonSongs;
+cout << "comparing songs" << endl;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
     cout << it->first << " "<< it->second << endl;
