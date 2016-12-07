@@ -79,6 +79,7 @@ void User::store_data(string filename) {
 }                       
 
 // Return a set of songs that are in both users' playlists
+//erin - confused about how to incorporate the "sameSongs" set in the Data struct. probably is an easy fix that i can't see though 
 set<string> User::compare_songs(set<string> s) {
   set<string> commonSongs;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
