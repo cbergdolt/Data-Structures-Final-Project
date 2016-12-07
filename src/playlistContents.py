@@ -29,6 +29,9 @@ if __name__ == '__main__':
         sp = spotipy.Spotify(auth=token)
         playlists = sp.user_playlists(username)
 	user1 = open("data/user1.txt", 'w') # open file for write only
+	userinfo = sp.user(username)
+	user1.write(userinfo['display_name'])
+	user1.write("\n")
         for playlist in playlists['items']:
             if playlist['owner']['id'] == username:
                 results = sp.user_playlist(username, playlist['id'],
@@ -49,6 +52,9 @@ if __name__ == '__main__':
         sp2 = spotipy.Spotify(auth=token2)
 	playlists2 = sp2.user_playlists(username2)
 	user2 = open("data/user2.txt", 'w') # open file for write only
+	userinfo2 = sp2.user(username2)
+        user2.write(userinfo['display_name'])
+        user2.write("\n")
 	for playlist2 in playlists2['items']:
             if playlist2['owner']['id'] == username2:
         	results2 = sp2.user_playlist(username2, playlist2['id'], fields="tracks,next")
