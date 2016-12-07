@@ -29,7 +29,7 @@ using namespace std;
 
 // Contains stats on users
 struct Data {
-    set<string> sameSongs;      // overlap of users' songs
+    set<pair<string, string>> sameSongs;      // overlap of users' songs
     set<string> sameArtists;    // overlap of users' artists
 };
 
