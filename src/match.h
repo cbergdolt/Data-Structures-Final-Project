@@ -47,6 +47,7 @@ class User {
     public:
         User();                                     // Constructor, should we include a destructor?
 	set<pair <string, string> > getSongs();
+        priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> getArtists();
         void store_data(string filename);           // Stores user's songs and artists
         set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
@@ -71,19 +72,23 @@ User::User() {
 set<pair<string, string> > User::getSongs(){
   return songs;
 }
-            
+
+priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> User::getArtists(){
+  return artists;
+}
+
  // Store user's songs and artists into data structures using output files from python script
 void User::store_data(string filename) {
     ifstream data;
     data.open(filename.c_str());
-    
+
     map<string, int> tmpArt;
     // Read in user1's information
     while (!data.fail()) {
         string artist;
-        string song;               
-        getline(data, artist, ':'); 
-        getline(data, song); 
+        string song;
+        getline(data, artist, ':');
+        getline(data, song);
 
         songs.insert(make_pair(song, artist));
         if (tmpArt.count(artist) != 0) {     // artist already in map
@@ -91,12 +96,12 @@ void User::store_data(string filename) {
         } else {
             tmpArt.insert(pair<string, int>(artist, 1));
 	}
-    }    
+    }
     //insert into priority queue
     for(map<string, int>::iterator it = tmpArt.begin(); it != tmpArt.end(); it++){
       artists.push(*it); //might need *
-    } 
-}                       
+    }
+}
 
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
@@ -108,7 +113,7 @@ set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   return commonSongs;
 }
 
-/* 
+/*
 set<string> User::compare_songs(set<string> s) {
   set<string> commonSongs;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
@@ -122,5 +127,3 @@ set<string> User::compare_songs(set<string> s) {
 //map<string, int> User::compare_artists(map<string, int> a) {
 
 //}
-
-
