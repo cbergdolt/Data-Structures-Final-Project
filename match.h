@@ -13,10 +13,11 @@
  */
 
 
-#pragma once
+//#pragma once
 
 // Include -------------------------------------
 #include <iostream>
+#include <fstream>
 #include <set>
 #include <map>
 #include <string>
@@ -31,11 +32,11 @@ struct Data {
 };
 
 
-// Classes -------------------------------------
+// Classes -------------------------------------------
 class User {
     public:
         User();                                     // Constructor, should we include a destructor?
-        void store_data();                          // Stores user's songs and artists
+        void store_data(string filename);           // Stores user's songs and artists
         set<string> compare_songs(set<string> s);   // returns set of overlapping songs b/w 2 users
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
     private:
@@ -45,5 +46,44 @@ class User {
         //string picture;           // Possibly save url to user's picture for output purposes?
 };
 
+
+
+// Implementation -------------------------------------
+User::User() {
+    set<string> s;
+    map<string, int> m;
+    songs = s;
+    artists = m;
+}
+            
+ // Store user's songs and artists into data structures using output files from python script
+void User::store_data(string filename) {
+    ifstream data;
+    data.open(filename.c_str());
+                         
+    // Read in user1's information
+    while (!data.fail()) {
+        string artist;
+        string song;               
+        getline(data, artist, ':'); 
+        getline(data, song); 
+
+        songs.insert(song);
+        if (artists.count(artist) != 0) {     // artist already in map
+            artists[artist]++;
+        } else {
+            artists.insert(pair<string, int>(artist, 1));
+        }
+    }             
+}                       
+
+// Return a set of songs that are in both users' playlists
+set<string> User::compare_songs(set<string> s) {
+                                       
+}
+
+map<string, int> User::compare_artists(map<string, int> a) {
+
+}
 
 
