@@ -47,11 +47,11 @@ class User {
     public:
         User();                                     // Constructor, should we include a destructor?
         void store_data(string filename);           // Stores user's songs and artists
-        set<string> compare_songs(set<string> s);   // returns set of overlapping songs b/w 2 users
+        set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
     private:
         //set<string> songs;          // This contains user's songs
-	set<pair <string, int> > songs;
+	set<pair <string, string> > songs;
         //map<string, int> artists;
 	priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
         //string picture;           // Possibly save url to user's picture for output purposes?
@@ -61,7 +61,7 @@ class User {
 
 // Implementation -------------------------------------
 User::User() {
-    set<pair<string, int> > s;
+    set<pair<string, string> > s;
     priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
     songs = s;
     artists = p;
@@ -80,7 +80,7 @@ void User::store_data(string filename) {
         getline(data, artist, ':'); 
         getline(data, song); 
 
-        songs.insert(song);
+        songs.insert(make_pair(song, artist));
         if (tmpArt.count(artist) != 0) {     // artist already in map
             tmpArt[artist]++;
         } else {
@@ -88,14 +88,14 @@ void User::store_data(string filename) {
 	}
     }    
     //insert into priority queue
-    for(map<string, int>::iterator it = tmpArt.begin();; it != tmpArt.end(); it++){
-      artists.push(it); //might need *
+    for(map<string, int>::iterator it = tmpArt.begin(); it != tmpArt.end(); it++){
+      artists.push(*it); //might need *
     } 
 }                       
 
 // Return a set of pairs (song, artist) that are in both users' playlists
-set<pair<string, int>> User::compare_songs(set<pair<string, int>> s){
-  set<pair<string, int>> commonSongs;
+set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
+  set<pair<string, string>> commonSongs;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
     cout << it.first << " "<< it.second << endl;
