@@ -50,9 +50,9 @@ class User {
         set<string> compare_songs(set<string> s);   // returns set of overlapping songs b/w 2 users
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
     private:
-        set<string> songs;          // This contains user's songs
-        //map<string, int> artists;   // Contains artist and frequency of that artist, 
-                                    //    maybe make it a prioity queue to find top artists??
+        //set<string> songs;          // This contains user's songs
+	set<pair <string, int> > songs;
+        //map<string, int> artists;
 	priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
         //string picture;           // Possibly save url to user's picture for output purposes?
 };
@@ -61,8 +61,7 @@ class User {
 
 // Implementation -------------------------------------
 User::User() {
-    set<string> s;
-    //map<string, int> m;
+    set<pair<string, int> > s;
     priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
     songs = s;
     artists = p;
@@ -94,8 +93,17 @@ void User::store_data(string filename) {
     } 
 }                       
 
-// Return a set of songs that are in both users' playlists
-//erin - confused about how to incorporate the "sameSongs" set in the Data struct. probably is an easy fix that i can't see though 
+// Return a set of pairs (song, artist) that are in both users' playlists
+set<pair<string, int>> User::compare_songs(set<pair<string, int>> s){
+  set<pair<string, int>> commonSongs;
+  set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
+  for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
+    cout << it.first << " "<< it.second << endl;
+  }
+  return commonSongs;
+}
+
+/* 
 set<string> User::compare_songs(set<string> s) {
   set<string> commonSongs;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
@@ -104,11 +112,10 @@ set<string> User::compare_songs(set<string> s) {
   }
   return commonSongs;
 }
+*/
 
 //map<string, int> User::compare_artists(map<string, int> a) {
 
 //}
-
-priority
 
 

@@ -19,11 +19,11 @@ int main(int argc, char *argv[]) {
     User user1;
     User user2;
     user1.store_data("user1.txt");
-//    user2.store_data("user2.txt");
+    user2.store_data("user2.txt");
 
-/*
+
     d.sameSongs = user1.compare_songs(user2.songs);
-    d.sameArtists = user1.compare_artists(user2.songs);
+    //d.sameArtists = user1.compare_artists(user2.songs);
 */
     // Analyze data 
     // compare user.songs.size() with d.sameSongs.data()
