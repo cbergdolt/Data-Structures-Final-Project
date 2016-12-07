@@ -21,6 +21,7 @@
 #include <set>
 #include <map>
 #include <string>
+#include <queue>
 #include <algorithm>
 using namespace std;
 
@@ -34,6 +35,14 @@ struct Data {
 
 
 // Classes -------------------------------------------
+class cmpfunc{
+ public:
+  bool operator()(pair<string, int> a, pair<string, int> b){
+    if (a.second > b.second) return true;
+    else return false;
+  }
+
+};
 class User {
     public:
         User();                                     // Constructor, should we include a destructor?
@@ -42,8 +51,9 @@ class User {
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
     private:
         set<string> songs;          // This contains user's songs
-        map<string, int> artists;   // Contains artist and frequency of that artist, 
+        //map<string, int> artists;   // Contains artist and frequency of that artist, 
                                     //    maybe make it a prioity queue to find top artists??
+	priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
         //string picture;           // Possibly save url to user's picture for output purposes?
 };
 
@@ -52,9 +62,10 @@ class User {
 // Implementation -------------------------------------
 User::User() {
     set<string> s;
-    map<string, int> m;
+    //map<string, int> m;
+    priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
     songs = s;
-    artists = m;
+    artists = p;
 }
             
  // Store user's songs and artists into data structures using output files from python script
@@ -70,11 +81,12 @@ void User::store_data(string filename) {
         getline(data, song); 
 
         songs.insert(song);
-        if (artists.count(artist) != 0) {     // artist already in map
+        /*if (artists.count(artist) != 0) {     // artist already in map
             artists[artist]++;
         } else {
             artists.insert(pair<string, int>(artist, 1));
-        }
+	    }*/
+	
     }             
 }                       
 
@@ -92,5 +104,7 @@ set<string> User::compare_songs(set<string> s) {
 //map<string, int> User::compare_artists(map<string, int> a) {
 
 //}
+
+priority
 
 
