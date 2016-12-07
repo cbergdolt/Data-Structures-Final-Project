@@ -46,6 +46,7 @@ class cmpfunc{
 class User {
     public:
         User();                                     // Constructor, should we include a destructor?
+	set<pair <string, string> > getSongs();
         void store_data(string filename);           // Stores user's songs and artists
         set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
         map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
@@ -65,6 +66,10 @@ User::User() {
     priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
     songs = s;
     artists = p;
+}
+
+set<pair<string, string> > User::getSongs(){
+  return songs;
 }
             
  // Store user's songs and artists into data structures using output files from python script
@@ -98,7 +103,7 @@ set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   set<pair<string, string>> commonSongs;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
-    cout << it.first << " "<< it.second << endl;
+    cout << it->first << " "<< it->second << endl;
   }
   return commonSongs;
 }

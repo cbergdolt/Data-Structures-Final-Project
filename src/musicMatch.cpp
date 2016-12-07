@@ -22,9 +22,9 @@ int main(int argc, char *argv[]) {
     user2.store_data("user2.txt");
 
 
-    d.sameSongs = user1.compare_songs(user2.songs);
+    d.sameSongs = user1.compare_songs(user2.getSongs());
+
     //d.sameArtists = user1.compare_artists(user2.songs);
-*/
     // Analyze data 
     // compare user.songs.size() with d.sameSongs.data()
     // ^ ditto for artists
