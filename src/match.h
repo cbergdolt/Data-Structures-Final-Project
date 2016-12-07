@@ -72,7 +72,8 @@ User::User() {
 void User::store_data(string filename) {
     ifstream data;
     data.open(filename.c_str());
-                         
+    
+    map<string, int> tmpArt;
     // Read in user1's information
     while (!data.fail()) {
         string artist;
@@ -81,13 +82,16 @@ void User::store_data(string filename) {
         getline(data, song); 
 
         songs.insert(song);
-        /*if (artists.count(artist) != 0) {     // artist already in map
-            artists[artist]++;
+        if (tmpArt.count(artist) != 0) {     // artist already in map
+            tmpArt[artist]++;
         } else {
-            artists.insert(pair<string, int>(artist, 1));
-	    }*/
-	
-    }             
+            tmpArt.insert(pair<string, int>(artist, 1));
+	}
+    }    
+    //insert into priority queue
+    for(map<string, int>::iterator it = tmpArt.begin();; it != tmpArt.end(); it++){
+      artists.push(it); //might need *
+    } 
 }                       
 
 // Return a set of songs that are in both users' playlists
