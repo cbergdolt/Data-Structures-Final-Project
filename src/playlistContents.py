@@ -53,7 +53,7 @@ if __name__ == '__main__':
 	playlists2 = sp2.user_playlists(username2)
 	user2 = open("data/user2.txt", 'w') # open file for write only
 	userinfo2 = sp2.user(username2)
-        user2.write(userinfo['display_name'])
+        user2.write(userinfo2['display_name'])
         user2.write("\n")
 	for playlist2 in playlists2['items']:
             if playlist2['owner']['id'] == username2:
