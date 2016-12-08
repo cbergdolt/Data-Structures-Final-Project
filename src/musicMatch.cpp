@@ -145,7 +145,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     // cout << "---------------------------------------------------------------------------" << endl;
   }
   if (destFound) {
-    cout << "We found a path between your top artists!" << endl << "These artists you both might like!" << "Here it is: " << endl;
+    cout << "We found a path between your top artists!" << endl << "These artists you both might like!" << "\nHere it is: " << endl;
     //Reconstruct path
     int distance = 0;
     stack <pair<string, string> > path;
@@ -156,7 +156,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     }
     path.push(start);
     while (!path.empty()) {
-      cout << path.top().first << " " << path.top().second << endl;
+      cout << "\t" << path.top().first << endl;
       path.pop();
     }
   }
@@ -179,7 +179,7 @@ int main(int argc, char *argv[]) {
     // Welcome user
     cout << "WELCOME TO MUSIC MATCH" << endl;
 
-    system("cat data/asciiart.txt");
+    system("scroll -lps=300 data/asciiart.txt");
 
     // Instantiate User objects
     Data d;
