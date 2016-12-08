@@ -143,7 +143,7 @@ set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   if (commonSongs.size() == 0) {
     cout << "\nSorry, there are no common songs between these two users." << endl;
   } else {
-    cout << "\nThere's a match! Here's a list of the common songs between these two users:" << endl;
+    cout << "There's a match! Here's a list of the common songs between these two users:" << endl;
     cout << "---------------------------------------------------------------------------" << endl;
     for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
         cout << it->first << " - "<< it->second << endl;
