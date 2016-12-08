@@ -41,32 +41,35 @@ class cmpfunc{
     if (a.second < b.second) return true;
     else return false;
   }
-
 };
 class User {
-    public:
-        User();                                     // Constructor, should we include a destructor?
-	set<pair <string, string> > getSongs();
-        priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> getArtists();
-        void store_data(string filename);           // Stores user's songs and artists
-        set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
-        map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
-    private:
-        //set<string> songs;          // This contains user's songs
-	set<pair <string, string> > songs;
-        //map<string, int> artists;
-	priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
-        //string picture;           // Possibly save url to user's picture for output purposes?
+  public:
+    User();                                     // Constructor, should we include a destructor?
+    set<pair <string, string> > getSongs();
+    priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> getArtists();
+    map<string, string> getArtistIds();
+    void store_data(string filename);           // Stores user's songs and artists
+    void storeArtistData(string filename);           // Stores user's songs and artists
+    set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
+    map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
+  private:
+    //set<string> songs;          // This contains user's songs
+    set<pair <string, string> > songs;
+    //map<string, int> artists;
+    priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
+    map<string, string> artist_ids;
+    //string picture;           // Possibly save url to user's picture for output purposes?
 };
-
 
 
 // Implementation -------------------------------------
 User::User() {
     set<pair<string, string> > s;
     priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
+    map<string, string> a;    /// TODO need this, what does this do???
     songs = s;
     artists = p;
+    artist_ids = a;   /// TODO need this, what does this do???
 }
 
 set<pair<string, string> > User::getSongs(){
@@ -77,10 +80,14 @@ priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> User::
   return artists;
 }
 
+map<string, string> User::getArtistIds() {
+  return artist_ids;
+}
+
+
  // Store user's songs and artists into data structures using output files from python script
 void User::store_data(string filename) {
   ifstream data;
-  string testing;
   data.open(filename.c_str());
   if (data.good()) {
     map<string, int> tmpArt;
@@ -103,6 +110,24 @@ void User::store_data(string filename) {
     data.close();
   }
 }
+
+
+// Store artist data in a map. Save map to allow for access to artist ids.
+void User::storeArtistData(string filename) {
+  ifstream artist_data;
+  artist_data.open(filename.c_str());
+  if (artist_data.good()) {
+    string artist;
+    string id;
+    // Read in user data and make map of artist and song count
+    while (getline(artist_data, artist, ':')) {
+      getline(artist_data, id);
+      artist_ids[artist] = id;
+    }
+    artist_data.close();
+  }
+}
+
 
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){

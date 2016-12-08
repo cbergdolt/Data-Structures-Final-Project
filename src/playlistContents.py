@@ -12,6 +12,17 @@ def save_tracks(tracks, userfile):
 	userfile.write(track['name'].encode('utf8')) # track name
 	userfile.write("\n") # newline
 
+def save_artist(tracks, userfile):
+    for i, item in enumerate(tracks['items']):
+        track = item['track']
+        artists = track['artists']
+        artist_name = artists[0]['name']
+        artist_id = artists[0]['id']
+        userfile.write(artist_name.encode('utf8')) # track artist
+	userfile.write(":") # artist/id separator
+	userfile.write(artist_id.encode('utf8')) # id
+	userfile.write("\n") # newline
+
 
 if __name__ == '__main__':
     if len(sys.argv) > 2:
@@ -23,47 +34,50 @@ if __name__ == '__main__':
         sys.exit()
 
 
+    print "USER 1"
     token = util.prompt_for_user_token(username)
-
     if token:
         sp = spotipy.Spotify(auth=token)
+        userinfo = sp.user(username)
+        print userinfo['display_name']
         playlists = sp.user_playlists(username)
-	user1 = open("data/user1.txt", 'w') # open file for write only
-	userinfo = sp.user(username)
-	user1.write(userinfo['display_name'])
-	user1.write("\n")
+    	user1_artist_song = open("data/user1_artist_song.txt", 'w') # open file for write only
+        user1_artist_id = open("data/user1_artist_id.txt", 'w') # open file for write only
         for playlist in playlists['items']:
             if playlist['owner']['id'] == username:
-                results = sp.user_playlist(username, playlist['id'],
-                    fields="tracks,next")
+                results = sp.user_playlist(username, playlist['id'], fields="tracks,next")
                 tracks = results['tracks']
-                save_tracks(tracks, user1)
+                save_tracks(tracks, user1_artist_song)
                 while tracks['next']:
                     tracks = sp.next(tracks)
-                    save_tracks(tracks, user1)
-	user1.close() # close file
+                    save_tracks(tracks, user1_artist_song)
+                    save_artist(tracks, user1_artist_id)
+    	user1_artist_song.close() # close file
+        user1_artist_id.close()
     else:
         print "Can't get token for", username
 
 
+    print "USER 2"
     token2 = util.prompt_for_user_token(username2)
-
     if token2:
         sp2 = spotipy.Spotify(auth=token2)
-	playlists2 = sp2.user_playlists(username2)
-	user2 = open("data/user2.txt", 'w') # open file for write only
-	userinfo2 = sp2.user(username2)
-        user2.write(userinfo2['display_name'])
-        user2.write("\n")
-	for playlist2 in playlists2['items']:
-            if playlist2['owner']['id'] == username2:
-        	results2 = sp2.user_playlist(username2, playlist2['id'], fields="tracks,next")
-	        tracks2 = results2['tracks']
-           	save_tracks(tracks2, user2)
-            	while tracks2['next']:
-            	    tracks2 = sp2.next(tracks2)
-            	    save_tracks(tracks2, user2)
-    	user2.close() #close file
-    else:
-	print "Can't get token for", username2
+        userinfo = sp2.user(username)
+        print userinfo['display_name']
+    	playlists2 = sp2.user_playlists(username2)
+    	user2_artist_song = open("data/user2_artist_song.txt", 'w') # open file for write only
+        user2_artist_id = open("data/user2_artist_id.txt", 'w') # open file for write only
+    	for playlist2 in playlists2['items']:
+                if playlist2['owner']['id'] == username2:
+                	results2 = sp2.user_playlist(username2, playlist2['id'], fields="tracks,next")
+        	        tracks2 = results2['tracks']
+                   	save_tracks(tracks2, user2_artist_song)
+                	while tracks2['next']:
+                	    tracks2 = sp2.next(tracks2)
+                	    save_tracks(tracks2, user2_artist_song)
+                        save_artist(tracks2, user2_artist_id)
+    	user2_artist_song.close() #close file
+        user2_artist_id.close()
 
+    else:
+        print "Can't get token for", username2
