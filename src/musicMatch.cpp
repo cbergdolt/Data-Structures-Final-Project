@@ -111,10 +111,10 @@ void analyze_artists(User user1, User user2) {
   frontier.push({0, start, start});
 
   // Add neighbors to frontier
-  frontierElement curr = frontier.top();  // TODO pop?
+  frontierElement curr = frontier.top();
   neighbors = findNeighbors(curr);
 
-  while (!frontier.empty() && !destFound && levelsDeep<=16) { //TODO modify levels down
+  while (!frontier.empty() && !destFound && levelsDeep<16) {
     // cout << "LEVELS DEEP: " << levelsDeep << endl;
     frontierElement curr = frontier.top();
     frontier.pop();
@@ -124,20 +124,21 @@ void analyze_artists(User user1, User user2) {
       marked.insert(pair<pair<string, string>, pair<string,string>>(curr.name, curr.prev));
       // cout << "Inserting into MARKED: (" << curr.name.first << "," << curr.name.second << ") : (" << curr.prev.first << "," << curr.prev.second << ") " << endl;
       // Add neighbors to frontier
+      cout << "Searching for neighbors of " << curr.name.firstc << endl;
       neighbors = findNeighbors(curr);
       for (set<pair<string, string>>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {   // TODO auto?
         frontier.push({1+curr.cost, *it, curr.name});
         // cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
         // Check if it is going into a new level and update levelsDeep
         if (levelsDeep!=1+curr.cost) {
-          cout << "Going into the " << levelsDeep << " degree of separation." << endl;
+          cout << "Going into degree #" << levelsDeep+1 << " of separation..." << endl;
         }
         levelsDeep=1+curr.cost;
         if (end == *it) {
           destFound = true;
           marked.insert(pair<pair<string, string>, pair<string,string>>(*it, curr.name));
           // cout << "Inserting into MARKED: (" << (*it).first << "," << (*it).second << ") : (" << curr.name.first << "," << curr.name.second << ") " << endl;
-          break;  // TODO yes?
+          break;  // Will only get the first match (even if there is another match on the same level)
         }
       } // Done iterating through neighbors
     }   // Finished !marked()
@@ -167,6 +168,8 @@ void analyze_artists(User user1, User user2) {
 int main(int argc, char *argv[]) {
     // Welcome user
     cout << "WELCOME TO MUSIC MATCH" << endl;
+
+    system("cat data/asciiart.txt");
 
     // Instantiate User objects
     Data d;
