@@ -52,7 +52,7 @@ class User {
     void store_data(string filename);  // Stores user's songs and artists
     void storeArtistData(string filename); // Stores user's songs and artists
 	 // returns set of overlapping songs b/w 2 users
-    set<pair<string, string>> compare_songs(set<pair<string, string>> s);  
+    set<pair<string, string>> compare_songs(set<pair<string, string>> s);
 	 // returns map of overlapping artists and "rank" of artist
     map<string, int> compare_artists(map<string, int> a);
   private:
@@ -138,17 +138,17 @@ void User::storeArtistData(string filename) {
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   set<pair<string, string>> commonSongs;
-  cout << "\n\nComparing songs..." << endl;
+  cout << "\n\nCOMPARING SONGS..." << endl;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   if (commonSongs.size() == 0) {
     cout << "\nSorry, there are no common songs between these two users." << endl;
   } else {
-    cout << "\nThere's a match! Here's a list of the common songs between these two users:" << endl;
-    cout << "---------------------------------------------------------------------------" << endl; 
+    cout << "There's a match! Here's a list of the common songs between these two users:" << endl;
+    cout << "---------------------------------------------------------------------------" << endl;
     for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
         cout << it->first << " - "<< it->second << endl;
     }
-    cout << "---------------------------------------------------------------------------" << endl; 
+    cout << "---------------------------------------------------------------------------" << endl;
   }
   return commonSongs;
 }
