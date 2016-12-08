@@ -38,7 +38,7 @@ struct Data {
 class cmpfunc{
  public:
   bool operator()(pair<string, int> a, pair<string, int> b){
-    if (a.second > b.second) return true;
+    if (a.second < b.second) return true;
     else return false;
   }
 
@@ -79,34 +79,35 @@ priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> User::
 
  // Store user's songs and artists into data structures using output files from python script
 void User::store_data(string filename) {
-    ifstream data;
-    data.open(filename.c_str());
-
+  ifstream data;
+  string testing;
+  data.open(filename.c_str());
+  if (data.good()) {
     map<string, int> tmpArt;
-    // Read in user1's information
-    while (!data.fail()) {
-        string artist;
-        string song;
-        getline(data, artist, ':');
-        getline(data, song);
-
-        songs.insert(make_pair(song, artist));
-        if (tmpArt.count(artist) != 0) {     // artist already in map
-            tmpArt[artist]++;
-        } else {
-            tmpArt.insert(pair<string, int>(artist, 1));
-	}
+    string artist;
+    string song;
+    // Read in user data and make map of artist and song count
+    while (getline(data, artist, ':')) {
+      getline(data, song);
+      songs.insert(make_pair(song, artist));
+      if (tmpArt.count(artist) != 0) {     // artist already in map
+        tmpArt[artist]++;
+      } else {
+        tmpArt.insert(pair<string, int>(artist, 1));
+      }
     }
-    //insert into priority queue
+    // Insert map elements into priority queue
     for(map<string, int>::iterator it = tmpArt.begin(); it != tmpArt.end(); it++){
       artists.push(*it); //might need *
     }
+    data.close();
+  }
 }
 
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   set<pair<string, string>> commonSongs;
-cout << "comparing songs" << endl;
+  cout << "comparing songs" << endl;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
     cout << it->first << " "<< it->second << endl;
