@@ -44,21 +44,26 @@ class cmpfunc{
 };
 class User {
   public:
-    User();                                     // Constructor, should we include a destructor?
+    User(); // Constructor, should we include a destructor?
     set<pair <string, string> > getSongs();
     priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> getArtists();
     map<string, string> getArtistIds();
-    void store_data(string filename);           // Stores user's songs and artists
-    void storeArtistData(string filename);           // Stores user's songs and artists
-    set<pair<string, string>> compare_songs(set<pair<string, string>> s);   // returns set of overlapping songs b/w 2 users
-    map<string, int> compare_artists(map<string, int> a); // returns map of overlapping artists and "rank" of artist
+    string getName();
+    void store_data(string filename);  // Stores user's songs and artists
+    void storeArtistData(string filename); // Stores user's songs and artists
+
+	 // returns set of overlapping songs b/w 2 users
+    set<pair<string, string>> compare_songs(set<pair<string, string>> s);  
+	 // returns map of overlapping artists and "rank" of artist
+    map<string, int> compare_artists(map<string, int> a);
   private:
+    string name; //user name; potentially needed for outputting purposes
     //set<string> songs;          // This contains user's songs
     set<pair <string, string> > songs;
     //map<string, int> artists;
     priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
     map<string, string> artist_ids;
-    //string picture;           // Possibly save url to user's picture for output purposes?
+    //string picture;   // Possibly save url to user's picture for output purposes?
 };
 
 
@@ -84,6 +89,9 @@ map<string, string> User::getArtistIds() {
   return artist_ids;
 }
 
+string User::getName() {
+  return name;
+}
 
  // Store user's songs and artists into data structures using output files from python script
 void User::store_data(string filename) {
@@ -93,6 +101,7 @@ void User::store_data(string filename) {
     map<string, int> tmpArt;
     string artist;
     string song;
+    getline(data, name);
     // Read in user data and make map of artist and song count
     while (getline(data, artist, ':')) {
       getline(data, song);
