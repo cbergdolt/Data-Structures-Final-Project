@@ -29,7 +29,7 @@ using namespace std;
 
 // Contains stats on users
 struct Data {
-    set<pair<string, string>> sameSongs;      // overlap of users' songs
+    set<pair<string, string> > sameSongs;      // overlap of users' songs
     set<string> sameArtists;    // overlap of users' artists
 };
 
@@ -52,7 +52,7 @@ class User {
     void store_data(string filename);  // Stores user's songs and artists
     void storeArtistData(string filename); // Stores user's songs and artists
 	 // returns set of overlapping songs b/w 2 users
-    set<pair<string, string>> compare_songs(set<pair<string, string>> s);
+    set<pair<string, string> > compare_songs(set<pair<string, string> > s);
 	 // returns map of overlapping artists and "rank" of artist
     map<string, int> compare_artists(map<string, int> a);
   private:
@@ -66,7 +66,7 @@ class User {
 // Implementation -------------------------------------
 User::User() {
     set<pair<string, string> > s;
-    priority_queue<pair<string, int>, vector<pair<string, int>>, cmpfunc> p;
+    priority_queue<pair<string, int>, vector<pair<string, int> >, cmpfunc> p;
     map<string, string> a;    /// TODO need this, what does this do???
     songs = s;
     artists = p;
@@ -136,8 +136,8 @@ void User::storeArtistData(string filename) {
 
 
 // Return a set of pairs (song, artist) that are in both users' playlists
-set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
-  set<pair<string, string>> commonSongs;
+set<pair<string, string> > User::compare_songs(set<pair<string, string> > s){
+  set<pair<string, string> > commonSongs;
   cout << "\n\nCOMPARING SONGS..." << endl;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
   if (commonSongs.size() == 0) {
