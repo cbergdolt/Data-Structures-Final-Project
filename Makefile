@@ -8,8 +8,13 @@ measure:	src/measure.cpp
 	g++ -g -gdwarf-2 -Wall -std=gnu++11 src/measure.cpp -o measure
 test: test-memory
 
+test-memory:	src/musicMatch
+	@echo Testing memory...
+	@[`valgrind --leak-check=full ./src/musicMatch | grep ERROR | awk '{print $$4}'` = 0 ]
+
 clean:
 	rm musicMatch data/*
+
 
 check-users:
 ifndef user1
@@ -18,9 +23,4 @@ endif
 ifndef user2
 	$(error usage: "make user1=user1 user2=user2")
 endif
-
-
-test-memory:	src/musicMatch
-	@echo Testing memory...
-	@[`valgrind --leak-check=full ./src/musicMatch | grep ERROR | awk '{print $$4}'` = 0 ]
 
