@@ -1,5 +1,10 @@
-#python script to generate two txt files of playlists
-# (one for each user)
+#python script to generate four txt files:
+#  1. user1 artist:track
+#  2. user1 artist:artistID
+#  3. user2 artist:track
+#  4. user2 artist:artistID
+#Takes 2 arguments, the Spotify user IDs for two Spotify users
+
 import sys
 import spotipy
 import spotipy.util as util
@@ -7,7 +12,7 @@ import spotipy.util as util
 def save_tracks(tracks, userfile):
     for i, item in enumerate(tracks['items']):
         track = item['track']
-        userfile.write(track['artists'][0]['name'].encode('utf8')) # track artist
+        userfile.write(track['artists'][0]['name'].encode('utf8')) #track artist
 	userfile.write(":") # artist/track separator
 	userfile.write(track['name'].encode('utf8')) # track name
 	userfile.write("\n") # newline
@@ -43,7 +48,9 @@ if __name__ == '__main__':
         playlists = sp.user_playlists(username)
     	user1_artist_song = open("data/user1_artist_song.txt", 'w') # open file for write only
         user1_artist_id = open("data/user1_artist_id.txt", 'w') # open file for write only
-        for playlist in playlists['items']:
+	user1_artist_song.write(userinfo['display_name'].encode('utf8'))
+	user1_artist_song.write("\n")
+        for playlist in playlists['items']: # fill data files
             if playlist['owner']['id'] == username:
                 results = sp.user_playlist(username, playlist['id'], fields="tracks,next")
                 tracks = results['tracks']
@@ -68,7 +75,9 @@ if __name__ == '__main__':
     	playlists2 = sp2.user_playlists(username2)
     	user2_artist_song = open("data/user2_artist_song.txt", 'w') # open file for write only
         user2_artist_id = open("data/user2_artist_id.txt", 'w') # open file for write only
-    	for playlist2 in playlists2['items']:
+	user2_artist_song.write(userinfo['display_name'].encode('utf8'))
+	user2_artist_song.write("\n")
+    	for playlist2 in playlists2['items']: #fill data files
        	    if playlist2['owner']['id'] == username2:
                 results2 = sp2.user_playlist(username2, playlist2['id'], fields="tracks,next")
         	tracks2 = results2['tracks']
