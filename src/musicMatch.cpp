@@ -71,18 +71,15 @@ int main(int argc, char *argv[]) {
     user1.storeArtistData("data/user1_artist_id.txt");
     user2.storeArtistData("data/user2_artist_id.txt");
 
-    // d.sameSongs = user1.compare_songs(user2.getSongs());
+    // Find common songs between the 2 users
+    d.sameSongs = user1.compare_songs(user2.getSongs());
 
     // Use priority queue (artists) to identify top artist of user1 and user2
-    priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> ranked_artists_user1;
     pair <string, int> top_artist_user1;
-    priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> ranked_artists_user2;
     pair <string, int> top_artist_user2;
-    ranked_artists_user1 = user1.getArtists();
-    top_artist_user1 = ranked_artists_user1.top();
+    top_artist_user1 = user1.getArtists().top();
     cout << "Top Artist (user1): " << top_artist_user1.first << " " << endl;
-    ranked_artists_user2 = user2.getArtists();
-    top_artist_user2 = ranked_artists_user2.top();
+    top_artist_user2 = user2.getArtists().top();
     cout << "Top Artist (user2): " << top_artist_user2.first << " " << endl;
 
     // Use artist-artist id map (artist-ids) to match top artist to its id
@@ -125,9 +122,8 @@ int main(int argc, char *argv[]) {
     frontierElement curr = frontier.top();  // TODO pop?
     neighbors = findNeighbors(curr);
 
-    while (!frontier.empty() && !destFound && levelsDeep<=15) { //TODO modify levels down
+    while (!frontier.empty() && !destFound && levelsDeep<=16) { //TODO modify levels down
       cout << "LEVELS DEEP: " << levelsDeep << endl;
-      levelsDeep++;
       frontierElement curr = frontier.top();
       frontier.pop();
       cout << endl << "Popped { " << curr.cost << ", (" << curr.name.first << "," << curr.name.second <<"), (" << curr.prev.first << "," << curr.prev.second << ") }" << endl;
@@ -138,8 +134,9 @@ int main(int argc, char *argv[]) {
         // Add neighbors to frontier
         neighbors = findNeighbors(curr);
         for (set<pair<string, string>>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {   // TODO auto?
-          frontier.push({1, *it, curr.name});
-          cout << "Inserting into FRONTIER: { 1, (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
+          frontier.push({1+curr.cost, *it, curr.name});
+          cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
+	  levelsDeep=1+curr.cost;
           if (end == *it) {
             cout << "FOUND MATCH" << endl;
             destFound = true;
