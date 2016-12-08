@@ -124,7 +124,7 @@ void analyze_artists(User user1, User user2) {
       marked.insert(pair<pair<string, string>, pair<string,string>>(curr.name, curr.prev));
       // cout << "Inserting into MARKED: (" << curr.name.first << "," << curr.name.second << ") : (" << curr.prev.first << "," << curr.prev.second << ") " << endl;
       // Add neighbors to frontier
-      cout << "Searching for neighbors of " << curr.name.firstc << endl;
+      cout << "Searching for neighbors of " << curr.name.first << endl;
       neighbors = findNeighbors(curr);
       for (set<pair<string, string>>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {   // TODO auto?
         frontier.push({1+curr.cost, *it, curr.name});
