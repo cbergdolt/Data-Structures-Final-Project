@@ -145,7 +145,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     // cout << "---------------------------------------------------------------------------" << endl;
   }
   if (destFound) {
-    cout << "We found a path between your top artists!" << endl << "These artists you both might like!" << "\nHere it is: " << endl;
+    cout << "\nWe found a path between your top artists!" << endl << "These artists you both might like!" << "\nHere it is: " << endl;
     //Reconstruct path
     int distance = 0;
     stack <pair<string, string> > path;
