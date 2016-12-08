@@ -6,7 +6,7 @@ users:		check-users
 	python src/playlistContents.py $(user1) $(user2)
 
 clean:
-	rm musicMatch data/user1.txt data/user2.txt
+	rm musicMatch data/*
 
 check-users:
 ifndef user1
