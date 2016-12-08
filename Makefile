@@ -8,7 +8,7 @@ measure:	src/measure.cpp
 	g++ -g -gdwarf-2 -Wall -std=gnu++11 src/measure.cpp -o measure
 test: test-memory
 
-test-memory:	src/musicMatch
+test-memory:	musicMatch
 	@echo Testing memory...
 	@[`valgrind --leak-check=full ./src/musicMatch | grep ERROR | awk '{print $$4}'` = 0 ]
 
