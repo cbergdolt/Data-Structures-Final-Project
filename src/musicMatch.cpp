@@ -43,12 +43,12 @@ void print_stats(User u1, User u2, set<pair<string, string>> common) {
 }
 
 // Function to find neighbors (related artists) by executing python script. Creates and returns a set<string, string> of artists and artist ids.
-set< pair<string, string> > findNeighbors(frontierElement node) {
+set< pair<string, string> > findNeighbors(frontierElement node, char * neighborQuantity) {
   set< pair <string, string> > neighbors;
   string user1TopArtistId;
   user1TopArtistId = node.name.second;
   // Call relatedArtists.py to identify related artists of user1's top artist
-  string command = "python src/relatedArtists.py " + user1TopArtistId;
+  string command = "python src/relatedArtists.py " + user1TopArtistId + " " + neighborQuantity;
   FILE * f = popen(command.c_str(), "r"); // Use c_str() to convert to string to const char *
   if (f == 0) {
       fprintf(stderr, "Could not execute\n");
@@ -68,7 +68,7 @@ set< pair<string, string> > findNeighbors(frontierElement node) {
 }
 
 // Artist analysis Function
-void analyze_artists(User user1, User user2) {
+void analyze_artists(User user1, User user2, char * neighborQuantity) {
   // Use priority queue (artists) to identify top artist of user1 and user2
   pair <string, int> top_artist_user1;
   pair <string, int> top_artist_user2;
@@ -112,7 +112,7 @@ void analyze_artists(User user1, User user2) {
 
   // Add neighbors to frontier
   frontierElement curr = frontier.top();
-  neighbors = findNeighbors(curr);
+  neighbors = findNeighbors(curr, neighborQuantity);
 
   while (!frontier.empty() && !destFound && levelsDeep<16) {
     // cout << "LEVELS DEEP: " << levelsDeep << endl;
@@ -124,8 +124,8 @@ void analyze_artists(User user1, User user2) {
       marked.insert(pair<pair<string, string>, pair<string,string>>(curr.name, curr.prev));
       // cout << "Inserting into MARKED: (" << curr.name.first << "," << curr.name.second << ") : (" << curr.prev.first << "," << curr.prev.second << ") " << endl;
       // Add neighbors to frontier
-      cout << "Searching for neighbors of " << curr.name.first << endl;
-      neighbors = findNeighbors(curr);
+      cout << "Searching for artists related to " << curr.name.first << "." << endl;
+      neighbors = findNeighbors(curr, neighborQuantity);
       for (set<pair<string, string>>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {   // TODO auto?
         frontier.push({1+curr.cost, *it, curr.name});
         // cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
@@ -166,6 +166,16 @@ void analyze_artists(User user1, User user2) {
 }
 
 int main(int argc, char *argv[]) {
+    char * neighborQuantity;
+    if (argc == 2) {
+      neighborQuantity = argv[1];
+    }
+    else {
+      cout << "usage: ./musicMatch [neighborQuantity]" << endl;
+      cout << "neighborQuantity refers to the number of related artists to consider per visited artist" << endl;
+      return 0;
+    }
+
     // Welcome user
     cout << "WELCOME TO MUSIC MATCH" << endl;
 
@@ -189,7 +199,7 @@ int main(int argc, char *argv[]) {
     print_stats(user1, user2, d.sameSongs);
 
     // Analyze artist compatability
-    analyze_artists(user1, user2);
+    analyze_artists(user1, user2, neighborQuantity);
 
     return 0;
 }
