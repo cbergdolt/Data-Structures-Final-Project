@@ -20,11 +20,19 @@ if __name__ == '__main__':
     sp = spotipy.Spotify()
     results = sp.artist_related_artists(top_artist)
     related_artists = results['artists']
+
     # Save related artist info
-    for rel_artist in related_artists:
-        print rel_artist['name']
-        print rel_artist['id']
-        my_output_file.write(rel_artist['name'].encode('utf8'))
+    # for rel_artist in related_artists:
+    #     print rel_artist['name']
+    #     print rel_artist['id']
+    #     my_output_file.write(rel_artist['name'].encode('utf8'))
+    #     my_output_file.write(":")
+    #     my_output_file.write(rel_artist['id'].encode('utf8'))
+    #     my_output_file.write("\n")
+    for rel_artist_counter in range(0,5):
+        print related_artists[rel_artist_counter]['name']
+        print related_artists[rel_artist_counter]['id']
+        my_output_file.write(related_artists[rel_artist_counter]['name'].encode('utf8'))
         my_output_file.write(":")
-        my_output_file.write(rel_artist['id'].encode('utf8'))
+        my_output_file.write(related_artists[rel_artist_counter]['id'].encode('utf8'))
         my_output_file.write("\n")
