@@ -6,6 +6,7 @@ users:		check-users
 	python src/playlistContents.py $(user1) $(user2)
 measure:	src/measure.cpp
 	g++ -g -gdwarf-2 -Wall -std=gnu++11 src/measure.cpp -o measure
+test: test-memory
 
 clean:
 	rm musicMatch data/*
@@ -19,5 +20,7 @@ ifndef user2
 endif
 
 
-
+test-memory:	src/musicMatch
+	@echo Testing memory...
+	@[`valgrind --leak-check=full ./src/musicMatch | grep ERROR | awk '{print $$4}'` = 0 ]
 
