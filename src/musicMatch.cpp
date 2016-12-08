@@ -113,6 +113,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
   // Add neighbors to frontier
   frontierElement curr = frontier.top();
   neighbors = findNeighbors(curr, neighborQuantity);
+  int currLevelDeep = 0;
 
   while (!frontier.empty() && !destFound && levelsDeep<16) {
     // cout << "LEVELS DEEP: " << levelsDeep << endl;
@@ -120,6 +121,11 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     frontier.pop();
     // cout << endl << "Popped { " << curr.cost << ", (" << curr.name.first << "," << curr.name.second <<"), (" << curr.prev.first << "," << curr.prev.second << ") }" << endl;
     if (! marked.count(curr.name)) {
+      // Check if it is going into a new level
+      if (curr.cost > currLevelDeep) {
+        cout << "\n----- Going into degree #" << levelsDeep << " of separation... -----" << endl;
+        currLevelDeep = curr.cost;
+      }
       // Add current to marked
       marked.insert(pair<pair<string, string>, pair<string,string>>(curr.name, curr.prev));
       // cout << "Inserting into MARKED: (" << curr.name.first << "," << curr.name.second << ") : (" << curr.prev.first << "," << curr.prev.second << ") " << endl;
@@ -129,12 +135,9 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
       for (set<pair<string, string>>::iterator it = neighbors.begin(); it != neighbors.end(); it++) {   // TODO auto?
         frontier.push({1+curr.cost, *it, curr.name});
         // cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
-        // Check if it is going into a new level and update levelsDeep
-        if (levelsDeep!=1+curr.cost) {
-          cout << "\n----- Going into degree #" << levelsDeep+1 << " of separation... -----" << endl;
-        }
+        // Update levelsDeep
         levelsDeep=1+curr.cost;
-        if (end == *it) {
+        if (end == *it) {c
           destFound = true;
           marked.insert(pair<pair<string, string>, pair<string,string>>(*it, curr.name));
           // cout << "Inserting into MARKED: (" << (*it).first << "," << (*it).second << ") : (" << curr.name.first << "," << curr.name.second << ") " << endl;
