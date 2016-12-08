@@ -14,7 +14,7 @@ if __name__ == '__main__':
         print "usage: python relatedArtists.py [artistID]"
         sys.exit()
 
-    my_output_file = open("data/related_artists.txt", 'w') # open file for write only
+    my_output_file = open("data/related_artists.txt", 'w') # Open file for write only
 
     # API Call to retrieve related artist info
     sp = spotipy.Spotify()
