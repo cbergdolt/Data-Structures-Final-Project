@@ -25,6 +25,24 @@ public:
     }
 };
 
+// Print stats function
+void print_stats(User u1, User u2, set<pair<string, string>> common) {
+    float u1percent = 100 * ((float)common.size()/(float)u1.getSongs().size());
+    float u2percent = 100 * ((float)common.size()/(float)u2.getSongs().size());
+    cout << "\n" << u1.getName().first << " listens to " << u2percent << "% of "<< u2.getName().first<< "'s songs" << endl;  
+    cout << u2.getName().first << " listens to " << u1percent << "% of "<< u1.getName().first <<"'s songs\n"<< endl; 
+    pair <string, int> top_artist_user1;
+    pair <string, int> top_artist_user2;
+    top_artist_user1 = u1.getArtists().top();
+    cout << "\n\nHere are your top artists:"<< endl;
+    cout << "---------------------------------------------------------------------------" << endl;
+    cout << u1.getName().first << "'s Top Artist: " << top_artist_user1.first << " " << endl;
+    top_artist_user2 = u2.getArtists().top();
+ 
+    cout << u2.getName().first << "'s Top Artist: " << top_artist_user2.first << " \n" << endl;
+
+}
+
 // Function to find neighbors (related artists) by executing python script. Creates and returns a set<string, string> of artists and artist ids.
 set< pair<string, string> > findNeighbors(frontierElement node) {
   set< pair <string, string> > neighbors;
@@ -37,12 +55,6 @@ set< pair<string, string> > findNeighbors(frontierElement node) {
       fprintf(stderr, "Could not execute\n");
       return neighbors;   // TODO check this. empty for sure? better way?
   }
-  // string artistName;
-  // string artistId;
-  // while (getline(f, artistName, ':')) {
-  //   getline(f, artistId);
-  //   neighbors.insert(make_pair(artistName, artistId));
-  // }
   const int BUFSIZE = 200;
   char artistName[ BUFSIZE ];
   char artistId[ BUFSIZE ];
@@ -57,9 +69,6 @@ set< pair<string, string> > findNeighbors(frontierElement node) {
 }
 
 int main(int argc, char *argv[]) {
-    // Run python script to generate output files of data
-
-
     // Instantiate User objects
     Data d;
     User user1;
@@ -74,14 +83,15 @@ int main(int argc, char *argv[]) {
     // Find common songs between the 2 users
     d.sameSongs = user1.compare_songs(user2.getSongs());
 
+    // Print stats of common songs
+    print_stats(user1, user2, d.sameSongs);
+
     // Use priority queue (artists) to identify top artist of user1 and user2
     pair <string, int> top_artist_user1;
     pair <string, int> top_artist_user2;
     top_artist_user1 = user1.getArtists().top();
-    cout << "Top Artist (user1): " << top_artist_user1.first << " " << endl;
     top_artist_user2 = user2.getArtists().top();
-    cout << "Top Artist (user2): " << top_artist_user2.first << " " << endl;
-
+ 
     // Use artist-artist id map (artist-ids) to match top artist to its id
     string user1TopArtistName;
     string user1TopArtistId;
@@ -168,12 +178,10 @@ int main(int argc, char *argv[]) {
       cout << "We're sorry, we could not find a sufficiently close relationship between your two top artists." << endl;
     }
 
-
     //d.sameArtists = user1.compare_artists(user2.songs);
     // Analyze data
     // compare user.songs.size() with d.sameSongs.data()
     // ^ ditto for artists
     // print top overlapping artists
-
     return 0;
 }

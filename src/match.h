@@ -48,22 +48,18 @@ class User {
     set<pair <string, string> > getSongs();
     priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> getArtists();
     map<string, string> getArtistIds();
-    string getName();
+    pair<string, string> getName();
     void store_data(string filename);  // Stores user's songs and artists
     void storeArtistData(string filename); // Stores user's songs and artists
-
 	 // returns set of overlapping songs b/w 2 users
     set<pair<string, string>> compare_songs(set<pair<string, string>> s);  
 	 // returns map of overlapping artists and "rank" of artist
     map<string, int> compare_artists(map<string, int> a);
   private:
-    string name; //user name; potentially needed for outputting purposes
-    //set<string> songs;          // This contains user's songs
+    pair<string, string> name; //user name; potentially needed for outputting purposes
     set<pair <string, string> > songs;
-    //map<string, int> artists;
     priority_queue< pair <string, int>, vector<pair <string, int> >, cmpfunc> artists;
     map<string, string> artist_ids;
-    //string picture;   // Possibly save url to user's picture for output purposes?
 };
 
 
@@ -89,7 +85,7 @@ map<string, string> User::getArtistIds() {
   return artist_ids;
 }
 
-string User::getName() {
+pair<string, string> User::getName() {
   return name;
 }
 
@@ -101,7 +97,8 @@ void User::store_data(string filename) {
     map<string, int> tmpArt;
     string artist;
     string song;
-    getline(data, name);
+    getline(data, name.first, ' ');
+    getline(data, name.second);
     // Read in user data and make map of artist and song count
     while (getline(data, artist, ':')) {
       getline(data, song);
@@ -141,13 +138,21 @@ void User::storeArtistData(string filename) {
 // Return a set of pairs (song, artist) that are in both users' playlists
 set<pair<string, string>> User::compare_songs(set<pair<string, string>> s){
   set<pair<string, string>> commonSongs;
-  cout << "comparing songs" << endl;
+  cout << "\n\nComparing songs..." << endl;
   set_intersection(songs.begin(), songs.end(), s.begin(), s.end(), inserter(commonSongs, commonSongs.begin()));
-  for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
-    cout << it->first << " "<< it->second << endl;
+  if (commonSongs.size() == 0) {
+    cout << "\nSorry, there are no common songs between these two users." << endl;
+  } else {
+    cout << "\nThere's a match! Here's a list of the common songs between these two users:" << endl;
+    cout << "---------------------------------------------------------------------------" << endl; 
+    for(auto it= commonSongs.begin(); it != commonSongs.end(); it++){
+        cout << it->first << " - "<< it->second << endl;
+    }
+    cout << "---------------------------------------------------------------------------" << endl; 
   }
   return commonSongs;
 }
+
 
 /*
 set<string> User::compare_songs(set<string> s) {
