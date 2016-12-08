@@ -10,7 +10,7 @@ test: test-memory
 
 test-memory:	musicMatch
 	@echo Testing memory...
-	@[`valgrind --leak-check=full ./musicMatch | grep ERROR | awk '{print $$4}'` = 0 ]
+	@[ `valgrind --leak-check=full ./musicMatch 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
 
 clean:
 	rm musicMatch data/related_artist.txt data/user1* data/user2*
