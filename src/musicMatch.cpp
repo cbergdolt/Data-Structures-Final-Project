@@ -131,7 +131,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
         // cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
         // Check if it is going into a new level and update levelsDeep
         if (levelsDeep!=1+curr.cost) {
-          cout << "----- Going into degree #" << levelsDeep+1 << " of separation... -----" << endl;
+          cout << "\n----- Going into degree #" << levelsDeep+1 << " of separation... -----" << endl;
         }
         levelsDeep=1+curr.cost;
         if (end == *it) {
