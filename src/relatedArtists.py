@@ -7,14 +7,15 @@ import spotipy
 import spotipy.util as util
 
 if __name__ == '__main__':
-    if len(sys.argv) > 1:
+    if len(sys.argv) > 2:
         top_artist = sys.argv[1]
+        neighbor_quantity = int(sys.argv[2])
     else:
         print "Please supply an artist ID"
-        print "usage: python relatedArtists.py [artistID]"
+        print "usage: python relatedArtists.py [artistID] [neighbor_quantity]"
         sys.exit()
 
-    my_output_file = open("data/related_artists.txt", 'w') # Open file for write only
+    my_output_file = open("data/related_artists.txt", 'w') # open file for write only
 
     # API Call to retrieve related artist info
     sp = spotipy.Spotify()
@@ -22,7 +23,7 @@ if __name__ == '__main__':
     related_artists = results['artists']
 
     # Save related artist info
-    for rel_artist_counter in range(0,5):
+    for rel_artist_counter in range(0,neighbor_quantity):
         try:
             print related_artists[rel_artist_counter]['name']
             print related_artists[rel_artist_counter]['id']
