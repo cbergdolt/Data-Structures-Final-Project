@@ -22,7 +22,10 @@ def save_artist(tracks, userfile):
         track = item['track']
         artists = track['artists']
         artist_name = artists[0]['name']
-        artist_id = artists[0]['id']
+        if artists[0]['id']:
+            artist_id = artists[0]['id']
+        else:
+            artist_id = "SAVED ARTIST"
         userfile.write(artist_name.encode('utf8')) # track artist
 	userfile.write(":") # artist/id separator
 	userfile.write(artist_id.encode('utf8')) # id

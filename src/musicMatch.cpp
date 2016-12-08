@@ -169,7 +169,6 @@ int main(int argc, char *argv[]) {
     }
 
 
-
     //d.sameArtists = user1.compare_artists(user2.songs);
     // Analyze data
     // compare user.songs.size() with d.sameSongs.data()
