@@ -1,3 +1,11 @@
+To get these results, run the following commands:
+$ make users user1=<ID_1> user2=<ID_2>
+$ make musicMatch
+$ make measure
+$ ./musicMatch <#>	//# is the number of neighbors to visit in Djikstra's
+			//repeat as necessary with different numbers of 
+			// neighbors
+
 Output
 
 NEIGHBORS	| TIME		| MEMORY	| PATH DEGREE
@@ -22,4 +30,10 @@ NEIGHBORS	| TIME		| MEMORY	| PATH DEGREE
 19		| 31.269	| 14.175	| 3
 20		| 17.989	| 14.180	| 3
 
-Note: Though the path degree of 3 remained the same for arguments 7 and greater, the paths were not identical-- it would often provide different artists that made up the path that still had a degree of 3.
+Note: Though the path degree of 3 remained the same for arguments 7 and greater,
+the paths were not identical-- it would often provide different artists that 
+made up the path that still had a degree of 3.
+
+You can run 
+$ make test 
+to run the memory and time tests

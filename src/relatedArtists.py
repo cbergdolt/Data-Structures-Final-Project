@@ -1,8 +1,8 @@
 #python script to generate two txt files of playlists
 # (one for each user)
 import sys
-reload(sys)                         # Avoid UnicodeEncodeError: 'ascii' codec can't encode character u'\xd3' in position 0: ordinal not in range(128)
-sys.setdefaultencoding('utf-8')     # Same as above
+reload(sys) # Avoid UnicodeEncodeError: 'ascii' codec can't encode character u'\xd3' in position 0: ordinal not in range(128)
+sys.setdefaultencoding('utf-8') # Same as above
 import spotipy
 import spotipy.util as util
 

@@ -1,0 +1,20 @@
+Maria (marangu1)- 
+	relatedArtists.py
+	musicMatch.cpp
+	playlistContents.py
+
+Erin (eturley)-
+	musicMatch.cpp
+	measure.cpp
+	Makefile
+	match.h
+
+Maddie (mgent) -
+	match.h
+	musicMatch.cpp
+	playlistContents.py
+	
+Carolyn (cbergdolt)-
+	playlistContents.py
+	Makefile
+	musicMatch.cpp
