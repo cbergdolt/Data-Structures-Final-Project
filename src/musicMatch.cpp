@@ -11,7 +11,7 @@
 
 using namespace std;
 
-// Data structures for djiktra's algorithm
+// Data structures for djikstra's algorithm
 struct frontierElement {
     int cost;
     pair<string,string> name;
@@ -42,7 +42,8 @@ void print_stats(User u1, User u2, set<pair<string, string>> common) {
     cout << u2.getName().first << "'s Top Artist: " << top_artist_user2.first << " \n" << endl;
 }
 
-// Function to find neighbors (related artists) by executing python script. Creates and returns a set<string, string> of artists and artist ids.
+// Function to find neighbors (related artists) by executing python script. 
+//   Creates and returns a set<string, string> of artists and artist ids.
 set< pair<string, string> > findNeighbors(frontierElement node, char * neighborQuantity) {
     set< pair <string, string> > neighbors;
     string user1TopArtistId;
@@ -52,7 +53,7 @@ set< pair<string, string> > findNeighbors(frontierElement node, char * neighborQ
     FILE * f = popen(command.c_str(), "r"); // Use c_str() to convert to string to const char *
     if (f == 0) {
         fprintf(stderr, "Could not execute\n");
-        return neighbors;   // TODO check this. empty for sure? better way?
+        return neighbors;
     }
     const int BUFSIZE = 200;
     char artistName[ BUFSIZE ];
@@ -145,7 +146,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
         }   // Finished !marked()
     }
     if (destFound) {
-        cout << "\nWe found a path between your top artists!" << endl << "These artists you both might like!" << "\nHere it is: " << endl;
+        cout << "\nWe found a path between your top artists!" << endl << "These are artists you both might like!" << "\nHere it is: " << endl;
         //Reconstruct path
         int distance = 0;
         stack <pair<string, string> > path;
