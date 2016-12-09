@@ -20,11 +20,16 @@ setenv SPOTIPY_REDIRECT_URL https://sites.google.com/nd.edu/music-match/
 
 We downloaded Spotipy, a Python wrapper for the Spotify API to aid in accessing 
 Spotify data, to the student machines. We did this with the commands:
+
 $ pip install spotipy --user
+
 $ ls .local/lib/python2.7/site-packages/
+
   spotipy spotipy-2.3.8-py2.7.egg-info
 $ setenv $PYTHONPATH ~/.local/lib/python2.7/site-packages
+
 $ python
+
 >>> import spotipy
 
 RUNNING THE CODE:
