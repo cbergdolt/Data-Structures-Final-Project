@@ -137,7 +137,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
         // cout << "Inserting into FRONTIER: { " << 1+curr.cost<< ", (" << (*it).first << ", " << (*it).second << "), (" << curr.name.first << ", " << curr.name.second << ") }" << endl;
         // Update levelsDeep
         levelsDeep=1+curr.cost;
-        if (end == *it) {c
+        if (end == *it) {
           destFound = true;
           marked.insert(pair<pair<string, string>, pair<string,string>>(*it, curr.name));
           // cout << "Inserting into MARKED: (" << (*it).first << "," << (*it).second << ") : (" << curr.name.first << "," << curr.name.second << ") " << endl;
@@ -164,7 +164,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     }
   }
   else {
-    cout << "We're sorry, we could not find a sufficiently close relationship between " << user1TopArtistName << " and " << user2TopArtistName << "! " << endl;
+    cout << "\nWe're sorry, we could not find a sufficiently close relationship between " << user1TopArtistName << " and " << user2TopArtistName << "! " << endl;
   }
 }
 
