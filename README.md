@@ -11,8 +11,11 @@ data. We obtained these by registering our application-- in return, we got a
 client_id, client_secret, and redirect_uri. These credentials will be emailed 
 separately to Professor Bui. These credentials should then be saved in the 
 .cshrc file. This can be done with the following commands:
+
 setenv SPOTIPY_CLIENT_ID yourclientid
+
 setenv SPOTIPY_CLIENT_SECRET yourlcientsecret
+
 setenv SPOTIPY_REDIRECT_URL https://sites.google.com/nd.edu/music-match/
 
 We downloaded Spotipy, a Python wrapper for the Spotify API to aid in accessing 
