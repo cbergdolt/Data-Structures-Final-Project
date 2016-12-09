@@ -164,7 +164,7 @@ void analyze_artists(User user1, User user2, char * neighborQuantity) {
     }
   }
   else {
-    cout << "We're sorry, we could not find a sufficiently close relationship between " << user1TopArtistName << " and " << user2TopArtistName << "! " << endl;
+    cout << "\nWe're sorry, we could not find a sufficiently close relationship between " << user1TopArtistName << " and " << user2TopArtistName << "! " << endl;
   }
 }
 
