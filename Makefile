@@ -6,7 +6,7 @@ users:		check-users src/playlistContents.py
 	python src/playlistContents.py $(user1) $(user2)
 measure:	src/measure.cpp
 	g++ -g -gdwarf-2 -Wall -std=gnu++11 src/measure.cpp -o measure
-test: users test-memory test-time
+test: users measure test-memory test-time
 
 test-memory:	musicMatch
 	@echo Testing memory...
@@ -16,14 +16,14 @@ test-time:	musicMatch
 	@./measure ./musicMatch 5 | tail -n 1 | awk '{ if ($$1 > 30.0) { print "Time limit exceeded"; exit 1} }'
 
 clean:
-	rm musicMatch data/related_artists.txt data/user1* data/user2*
+	rm musicMatch data/related_artists.txt data/user1* data/user2* measure
 
 
 check-users:
 ifndef user1
-	$(error usage: "make user1=user1 user2=user2")
+	$(error usage: "make [target] user1=user1 user2=user2")
 endif
 ifndef user2
-	$(error usage: "make user1=user1 user2=user2")
+	$(error usage: "make [target] user1=user1 user2=user2")
 endif
 
