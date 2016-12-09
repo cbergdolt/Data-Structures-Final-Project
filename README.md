@@ -14,7 +14,7 @@ separately to Professor Bui. These credentials should then be saved in the
 
 setenv SPOTIPY_CLIENT_ID yourclientid
 
-setenv SPOTIPY_CLIENT_SECRET yourlcientsecret
+setenv SPOTIPY_CLIENT_SECRET yourclientsecret
 
 setenv SPOTIPY_REDIRECT_URL https://sites.google.com/nd.edu/music-match/
 
