@@ -182,7 +182,7 @@ int main(int argc, char *argv[]) {
     // Welcome user
     cout << "WELCOME TO MUSIC MATCH" << endl;
 
-    system("scroll -lps=300 data/asciiart.txt");
+    system("cat data/asciiart.txt");
 
     // Instantiate User objects
     Data d;
