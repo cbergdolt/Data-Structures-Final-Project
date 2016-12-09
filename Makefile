@@ -14,6 +14,10 @@ test-memory:	musicMatch
 test-time:	musicMatch
 	@./measure ./musicMatch 5 | tail -n 1 | awk '{ if ($$1 > 1.0) { print "Time limit exceeded"; exit 1} }'
 
+test-time:	musicMatch
+	@echo Testing time...
+	@./measure ./musicMatch 5 | tail -n 1 | awk '{ if ($$1 > 30.0) { print "Time limit exceeded"; exit 1} }'
+
 clean:
 	rm musicMatch data/related_artists.txt data/user1* data/user2*
 
