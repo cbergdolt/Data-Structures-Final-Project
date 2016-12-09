@@ -43,7 +43,9 @@ then type the command:
 You should then be given a URL. Copy this, paste it into your browser, and you 
 will be redirected to our Google Music Match site. Copy this URL you were 
 redirected to, then paste it into the terminal. You will have to repeat this 
-process for the second user.
+process for the second user. (Please note that, for reasons beyond our control,
+the google site we set up sometimes produces a 404 error. If this happens,
+simply copy the URL you were directed to and paste it in the terminal as usual.)
 The rest of the program should compile.
 
 In order to run musicMatch, you must specify how many related artists should 
