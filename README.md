@@ -19,4 +19,6 @@ RUNNING THE CODE:
 Each time a new user profile is accessed with this program, their Spotify data is not cached, and their account must be verified. To run the program with two new Spotify users, first obtain their URIs (available on their Spotify profile), then type the command:
      make user1=firstuserURI user2=seconduserURI
 You should then be given a URL. Copy this, paste it into your browser, and you will be redirected to our Google Music Match site. Copy this URL you were redirected to, then paste it into the terminal. You will have to repeat this process for the second user.
-The rest of the program should compile. Simply type: ./musicMatch to run the program. 
+The rest of the program should compile.
+In order to run musicMatch, you must specify how many related artists should be searched when finding the shortest path between two artists. For instance, if you want to look at 5 related artists for each artists, type: ./musicMatch 5
+

@@ -13,7 +13,7 @@ test-memory:	musicMatch
 	@[ `valgrind --leak-check=full ./musicMatch 2>&1 | grep ERROR | awk '{print $$4}'` = 0 ]
 
 clean:
-	rm musicMatch data/related_artist.txt data/user1* data/user2*
+	rm musicMatch data/related_artists.txt data/user1* data/user2*
 
 
 check-users:
