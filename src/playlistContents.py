@@ -41,13 +41,12 @@ if __name__ == '__main__':
         print "usage: python playlistContents.py [username1] [username2]"
         sys.exit()
 
-
-    print "USER 1"
+    # print "USER 1"
     token = util.prompt_for_user_token(username)
     if token:
         sp = spotipy.Spotify(auth=token)
         userinfo = sp.user(username)
-        print userinfo['display_name']
+        print "Hello, ", userinfo['display_name'], "!"
         playlists = sp.user_playlists(username)
     	user1_artist_song = open("data/user1_artist_song.txt", 'w') # open file for write only
         user1_artist_id = open("data/user1_artist_id.txt", 'w') # open file for write only
@@ -69,12 +68,12 @@ if __name__ == '__main__':
         print "Can't get token for", username
 
 
-    print "USER 2"
+    # print "USER 2"
     token2 = util.prompt_for_user_token(username2)
     if token2:
         sp2 = spotipy.Spotify(auth=token2)
         userinfo = sp2.user(username2)
-        print userinfo['display_name']
+        print "Hello, ", userinfo['display_name'], "!"
     	playlists2 = sp2.user_playlists(username2)
     	user2_artist_song = open("data/user2_artist_song.txt", 'w') # open file for write only
         user2_artist_id = open("data/user2_artist_id.txt", 'w') # open file for write only
