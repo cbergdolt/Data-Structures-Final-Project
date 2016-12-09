@@ -25,7 +25,8 @@ $ pip install spotipy --user
 
 $ ls .local/lib/python2.7/site-packages/
 
-  spotipy spotipy-2.3.8-py2.7.egg-info
+     spotipy spotipy-2.3.8-py2.7.egg-info
+
 $ setenv $PYTHONPATH ~/.local/lib/python2.7/site-packages
 
 $ python
